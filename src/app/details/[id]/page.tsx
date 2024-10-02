@@ -94,7 +94,7 @@ const ProductDetail = () => {
             </div>
             <div className="flex gap-1 items-center capitalize ">
               Tags:{" "}
-              {productData?.category.map((item) => (
+              {productData?.category.map((item : null) => (
                 <div key={item}>{item}</div>
               ))}
             </div>

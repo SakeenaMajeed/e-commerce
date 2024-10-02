@@ -43,9 +43,9 @@ export default function Footer({
 }) {
   const [email, setEmail] = useState("");
 
-  const handleNewsletterSignup = (e:any) => {
+  const handleNewsletterSignup = (e: any) => {
     e.preventDefault();
-    const mailtoLink = `mailto:your-email@example.com?subject=Newsletter Signup&body=I would like to sign up for the newsletter with this email: ${email}`;
+    const mailtoLink = `mailto:sakeenamajeed24@gmail.com?subject=Newsletter Signup&body=I would like to sign up for the newsletter with this email: ${email}`;
     window.location.href = mailtoLink;
     setEmail("");
   };
@@ -99,7 +99,7 @@ export default function Footer({
               placeholder="Your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="p-2 mb-2 rounded-md border border-gray-600 focus:outline-none focus:ring-2 focus:ring-pink-500"
+              className="p-2 mb-2 rounded-md border border-gray-600 focus:outline-none focus:ring-2 focus:ring-pink-500 text-black" // Updated for black text
               required
             />
             <button

@@ -1,17 +1,25 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react"; // Import useState
 import Swal from "sweetalert2";
 
 export default function Contact() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const formData = new FormData(event.target as HTMLFormElement);
 
-    formData.append("access_key", "915adfad-feb9-457b-85ff-064fcee681c7");
+    // Append access key to form data
+    const dataToSend = {
+      ...formData,
+      access_key: "915adfad-feb9-457b-85ff-064fcee681c7",
+    };
 
-    const object = Object.fromEntries(formData);
-    const json = JSON.stringify(object);
+    const json = JSON.stringify(dataToSend);
 
     try {
       const response = await fetch("https://api.web3forms.com/submit", {
@@ -30,6 +38,8 @@ export default function Contact() {
           text: "Message sent successfully!",
           icon: "success",
         });
+        // Clear form data after successful submission
+        setFormData({ name: "", email: "", message: "" });
       }
     } catch (error) {
       console.error("Error:", error);
@@ -40,6 +50,11 @@ export default function Contact() {
       });
     }
   }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
@@ -59,6 +74,8 @@ export default function Contact() {
             type="text"
             id="name"
             name="name"
+            value={formData.name} // Bind input value to state
+            onChange={handleChange} // Handle input change
             className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400"
             required
           />
@@ -72,6 +89,8 @@ export default function Contact() {
             type="email"
             id="email"
             name="email"
+            value={formData.email} // Bind input value to state
+            onChange={handleChange} // Handle input change
             className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400"
             required
           />
@@ -85,6 +104,8 @@ export default function Contact() {
             id="message"
             name="message"
             rows={4}
+            value={formData.message} // Bind input value to state
+            onChange={handleChange} // Handle input change
             className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400"
             required
           />

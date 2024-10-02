@@ -1,4 +1,3 @@
-
 import React from "react";
 import Image from "next/image";
 import { AiFillStar, AiOutlineHeart, AiOutlineShoppingCart, AiOutlineStar } from "react-icons/ai";
@@ -11,11 +10,11 @@ export interface IProduct {
   img: string;
   name: string;
   price: number;
-  category: string | string[];
+  category: string | string[];  
   sale: boolean;
 }
 
-const ProductCard = ({ id, img, name, price, sale }: IProduct) => {
+const ProductCard = ({ id, img, name, price, sale, category }: IProduct) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
@@ -70,6 +69,13 @@ const ProductCard = ({ id, img, name, price, sale }: IProduct) => {
       {getRating()}
       <h2 className="font-medium pb-3 hover:text-accent">{name}</h2>
       <p className="text-gray-600 font-light">${new Intl.NumberFormat().format(price)}.00</p>
+
+      {/* Display category */}
+      {Array.isArray(category) ? (
+        <p className="text-sm text-gray-500">{category.join(", ")}</p>  // For array of categories
+      ) : (
+        <p className="text-sm text-gray-500">{category}</p>  // For single category
+      )}
     </div>
   );
 };

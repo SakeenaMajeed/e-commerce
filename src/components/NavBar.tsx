@@ -24,6 +24,7 @@ export default function NavBar({ setShowCart }: any) {
 
   const iconVariants = {
     hover: { scale: 1.1, rotate: 10 },
+    tap: { scale: 0.9 },
   };
 
   const cartCount = useAppSelector((state) => state.cartReducer.length || 0);
@@ -31,13 +32,18 @@ export default function NavBar({ setShowCart }: any) {
   return (
     <div className="bg-gray-800 py-4 sticky top-0 z-10 shadow-md">
       <div className="container flex justify-between items-center">
-        <motion.div
+        <motion.button
+          type="button"
+          aria-label="Toggle Menu" // Accessibility
+          title="Toggle Menu"
           className="sm:hidden text-[26px] text-white cursor-pointer"
           onClick={() => setIsOpen(!isOpen)}
-          whileTap={{ scale: 1.2 }}
+          whileHover="hover"
+          whileTap="tap"
+          variants={iconVariants}
         >
           <RxHamburgerMenu />
-        </motion.div>
+        </motion.button>
 
         <motion.div
           initial="hidden"
@@ -49,7 +55,9 @@ export default function NavBar({ setShowCart }: any) {
           <Link
             href="/"
             className="hover:text-pink-500 transition duration-300"
-          >{`MakeUp`}</Link>
+          >
+            MakeUp
+          </Link>
         </motion.div>
 
         <motion.ul
@@ -76,6 +84,7 @@ export default function NavBar({ setShowCart }: any) {
             onClick={() => setShowCart(true)}
             variants={iconVariants}
             whileHover="hover"
+            whileTap="tap"
           >
             <AiOutlineShoppingCart />
             <div className="absolute top-[-15px] right-[-10px] bg-red-600 w-[25px] h-[25px] rounded-full text-white text-[14px] grid place-items-center">
@@ -87,6 +96,7 @@ export default function NavBar({ setShowCart }: any) {
             className="cursor-pointer text-white"
             variants={iconVariants}
             whileHover="hover"
+            whileTap="tap"
           >
             <AiOutlineSearch className="hover:text-pink-500 transition duration-300" />
           </motion.div>

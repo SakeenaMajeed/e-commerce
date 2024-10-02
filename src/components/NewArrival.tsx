@@ -22,24 +22,27 @@ export default function NewArrival() {
   useEffect(() => {
     setData(shuffleArray(ProductData).slice(0, 15));
   }, []);
-
   const handleTab = (index: number) => {
     const category = tabData[index].toLowerCase();
     setSelectedTab(index);
-
+  
     if (category === "all") {
       setData(shuffleArray(ProductData).slice(0, 15));
       return;
     }
-
-    const filteredData = ProductData.filter((item) =>
-      Array.isArray(item.category)
-        ? item.category.some((cat) => cat.toLowerCase().includes(category))
-        : typeof item.category === "string" &&
-          item.category.toLowerCase().includes(category)
-    );
+  
+    const filteredData = ProductData.filter((item) => {
+      const categories = item.category as string | string[]; // Type assertion
+      if (Array.isArray(categories)) {
+        return categories.some((cat) => typeof cat === 'string' && cat.toLowerCase().includes(category));
+      }
+      return typeof categories === "string" && categories.toLowerCase().includes(category);
+    });
+    
+  
     setData(shuffleArray(filteredData));
   };
+  
 
   return (
     <div className="container pt-32 px-4 sm:px-6 lg:px-8 bg-slate-200">
@@ -74,6 +77,7 @@ export default function NewArrival() {
                 name={item.name}
                 price={item.price}
                 sale={item.sale}
+                category={item.category}  
               />
             ))
           ) : (

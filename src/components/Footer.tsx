@@ -43,7 +43,7 @@ export default function Footer({
 }) {
   const [email, setEmail] = useState("");
 
-  const handleNewsletterSignup = (e) => {
+  const handleNewsletterSignup = (e:any) => {
     e.preventDefault();
     const mailtoLink = `mailto:your-email@example.com?subject=Newsletter Signup&body=I would like to sign up for the newsletter with this email: ${email}`;
     window.location.href = mailtoLink;

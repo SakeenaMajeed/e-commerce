@@ -1,3 +1,5 @@
+"use client"
+import React from "react";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import { motion } from "framer-motion";
@@ -15,10 +17,18 @@ const Payment = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const formData = new FormData(e.target as HTMLFormElement);
-    formData.append("access_key", "915adfad-feb9-457b-85ff-064fcee681c7");
+    const paymentData = {
+      access_key: "915adfad-feb9-457b-85ff-064fcee681c7",
+      email,
+      payment_method: paymentMethod,
+      card_number: cardNumber,
+      cardholder_name: cardholderName,
+      expiry_date: expiryDate,
+      cvc,
+      easypaisa_number: easypaisaNumber,
+      jazzcash_number: jazzcashNumber,
+    };
 
-    const paymentData = Object.fromEntries(formData);
     const json = JSON.stringify(paymentData);
 
     try {
@@ -81,19 +91,23 @@ const Payment = () => {
           </div>
 
           <div className="mb-4">
-            <label className="block text-sm font-medium mb-1">
-              Payment Method
-            </label>
-            <select
-              name="payment_method" // Added name attribute
-              className="w-full p-3 bg-gray-200 text-gray-900 rounded border border-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-400"
-              value={paymentMethod}
-              onChange={(e) => setPaymentMethod(e.target.value)}
-            >
-              <option value="card">Credit/Debit Card</option>
-              <option value="easypaisa">EasyPaisa</option>
-              <option value="jazzcash">JazzCash</option>
-            </select>
+          <label className="block text-sm font-medium mb-1" htmlFor="paymentMethod">
+  Payment Method
+</label>
+<select
+  id="paymentMethod"
+  name="payment_method"
+  className="w-full p-3 bg-gray-200 text-gray-900 rounded border border-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-400"
+  value={paymentMethod}
+  onChange={(e) => setPaymentMethod(e.target.value)}
+  aria-label="Payment Method" // Adding aria-label for accessibility
+>
+  <option value="card">Credit/Debit Card</option>
+  <option value="easypaisa">EasyPaisa</option>
+  <option value="jazzcash">JazzCash</option>
+</select>
+
+            
           </div>
 
           {paymentMethod === "card" && (
@@ -106,7 +120,7 @@ const Payment = () => {
                   Card Information
                 </label>
                 <input
-                  type="text"
+                  type="tel" // Changed to 'tel'
                   id="cardNumber"
                   name="card_number" // Added name attribute
                   className="w-full p-3 bg-gray-200 text-gray-900 rounded border border-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-400"
@@ -143,7 +157,7 @@ const Payment = () => {
                     CVC
                   </label>
                   <input
-                    type="text"
+                    type="number" // Changed to 'number'
                     id="cvc"
                     name="cvc" // Added name attribute
                     className="w-full p-3 bg-gray-200 text-gray-900 rounded border border-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-400"
@@ -184,7 +198,7 @@ const Payment = () => {
                 EasyPaisa Account Number
               </label>
               <input
-                type="text"
+                type="tel" // Changed to 'tel'
                 id="easypaisaNumber"
                 name="easypaisa_number" // Added name attribute
                 className="w-full p-3 bg-gray-200 text-gray-900 rounded border border-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-400"
@@ -205,7 +219,7 @@ const Payment = () => {
                 JazzCash Account Number
               </label>
               <input
-                type="text"
+                type="tel" // Changed to 'tel'
                 id="jazzcashNumber"
                 name="jazzcash_number" // Added name attribute
                 className="w-full p-3 bg-gray-200 text-gray-900 rounded border border-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-400"
@@ -219,9 +233,9 @@ const Payment = () => {
 
           <button
             type="submit"
-            className="w-full bg-pink-600 text-white py-3 rounded-lg mt-4 hover:bg-black transition duration-300"
+            className="mt-4 w-full p-3 bg-pink-600 text-white rounded hover:bg-pink-700 transition duration-300"
           >
-            Confirm Payment
+            Submit Payment
           </button>
         </form>
       </div>

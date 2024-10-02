@@ -3,7 +3,7 @@ import React from "react";
 interface propsType {
   img: string;
   title: string;
-  comment: string;
+  comment: number;
   date: string;
   style?: React.CSSProperties;
 }

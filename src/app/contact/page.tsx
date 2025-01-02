@@ -112,8 +112,7 @@ export default function Contact() {
         </div>
 
         <button
-          type="submit"
-          className="w-full bg-pink-600 text-white py-2 rounded-lg hover:bg-black transition duration-300"
+          type="submit" className="w-full bg-pink-600 text-white py-2 rounded-lg hover:bg-black transition duration-300"
         >
           Send Message
         </button>
